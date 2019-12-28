@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "An implementation of the Datastore interface that supports a time-to-live for key-value pairs.",
   "main": "dist/index",
-  "types": "dist/index",
+  "types": "dist/index",``
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "tsc",
@@ -23,6 +23,14 @@
     "database"
   ],
   "author": "Carson Farmer <carson.farmer@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/textileio/js-datastore-ttl/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/textileio/js-datastore-ttl.git"
+  },
+  "homepage": "https://github.com/textileio/js-datastore-ttl/#readme",
   "license": "MIT",
   "devDependencies": {
     "@types/chai": "^4.2.7",
