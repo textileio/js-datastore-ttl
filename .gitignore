@@ -1,0 +1,81 @@
+# System Files
+**/.DS_Store
+
+# Temp Files
+**/.tmp
+**/*.log
+**/*.cpuprofile
+**/*.heapsnapshot
+
+# Editor Files
+.c9/
+.vscode/
+.idea/
+launch.json
+
+# Private Files
+.env
+.env.*
+.cake_task_cache
+
+# Build Caches
+build/
+bower_components/
+node_modules/
+.next/
+.pnp/
+.pnp.js
+
+# Build Outputs
+**/out.*
+**/*.out
+**/*.out.*
+**/out/
+**/output/
+**/dist/
+edition*/
+coffeejs/
+coffee/
+es5/
+es2015/
+esnext/
+docs/
+
+# Compiled Object files, Static and Dynamic libs (Shared Objects)
+**/*.o
+**/*.a
+**/*.so
+**/*.pyc
+**/*.dylib
+**/*.dll
+**/*.exe
+**/*.exe~
+**/*.syso
+**/*.test
+**/*.prof
+.ipfs
+.textile*
+
+# Keys
+**/*.pem
+
+# Other
+_obj
+_test
+*.cgo1.go
+*.cgo2.c
+_cgo_defun.c
+_cgo_gotypes.go
+_cgo_export.*
+_testmain.go
+local.properties
+*.keystore
+*.iml
+
+# Bundle Artifact
+*.jsbundle
+sourcemap.js
+
+# Testing
+test-results/
+coverage/
