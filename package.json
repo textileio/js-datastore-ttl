@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "An implementation of the Datastore interface that supports a time-to-live for key-value pairs.",
   "main": "dist/index",
-  "types": "dist/index",``
+  "types": "dist/index",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "tsc",
