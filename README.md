@@ -7,6 +7,7 @@
 [![npm (scoped)](https://img.shields.io/npm/v/@textile/datastore-ttl.svg?style=popout-square)](https://www.npmjs.com/package/@textile/datastore-ttl)
 [![Release](https://img.shields.io/github/release/textileio/js-datastore-ttl.svg?style=flat-square)](https://github.com/textileio/js-datastore-ttl/releases/latest)
 [![docs](https://img.shields.io/badge/docs-master-success.svg?style=popout-square)](https://textileio.github.io/js-datastore-ttl)
+[![CircleCI branch](https://img.shields.io/circleci/project/github/textileio/js-datastore-ttl/master.svg?style=flat-square)](https://circleci.com/gh/textileio/js-datastore-ttl)
 [![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 
 > An implementation of the [Datastore interface](https://github.com/ipfs/interface-datastore) that
@@ -64,7 +65,7 @@ await ttl.has(key) // true
 await ttl.has(key) // false
 ```
 
-There are also several useful examples included in the [`tests` folder](https://github.com/textileio/js-datastore-ttl/tree/master/tests) of this repo.
+There are also several useful examples included in the [tests](./blob/master/src/index.spec.ts).
 
 ## API
 
@@ -72,7 +73,7 @@ See [https://textileio.github.io/js-datastore-ttl](https://textileio.github.io/j
 
 ## Maintainers
 
-[Carson Farmer](https://github.com/textileio)
+[Carson Farmer](https://github.com/carsonfarmer)
 
 ## Contributing
 
