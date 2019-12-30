@@ -51,17 +51,24 @@ npm i @textileio/datastore-ttl
 ## Usage
 
 ```typescript
+import { Buffer } from 'buffer'
 import { MemoryDatastore, Key } from 'interface-datastore'
+import { TTLDatastore } from '@textile/datastore-ttl'
 
 // Use any compliant Datastore
 const child = new MemoryDatastore()
 const key = new Key('foo')
 const store = new TTLDatastore(child)
 await ttl.put(key, Buffer.from('bar'), 1000)
-// Wait 900 milliseconds...
-await ttl.ttl(key, 100) // Keep alive for another 100 milliseconds
+// Wait 900 ms...
+await sleep(900)
+// Keep alive for another 100 ms from now
+await ttl.ttl(key, 100)
 await ttl.has(key) // true
-// Wait 110 milliseconds
+await ttl.expiration(key) // <unix-timestamp>
+await ttl.get(key) // <Buffer>
+// Wait 110 ms
+await sleep(110)
 await ttl.has(key) // false
 ```
 

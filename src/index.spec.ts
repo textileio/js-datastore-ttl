@@ -1,6 +1,5 @@
 import { expect } from 'chai'
 import { MemoryDatastore, Key } from 'interface-datastore'
-import { NamespaceDatastore } from 'datastore-core'
 import { TTLDatastore } from './index'
 
 const sleep = (ms: number) => new Promise(r => setTimeout(r, ms))
@@ -12,8 +11,7 @@ describe('Datastore TTL', () => {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     require('interface-datastore/src/tests')({
       setup() {
-        const store = new MemoryDatastore()
-        return new TTLDatastore(store)
+        return new TTLDatastore(new MemoryDatastore())
       },
       teardown() {
         return
@@ -23,8 +21,7 @@ describe('Datastore TTL', () => {
   describe('ttl features', () => {
     let ttl: TTLDatastore
     beforeEach(() => {
-      const store = new MemoryDatastore()
-      ttl = new TTLDatastore(store, new NamespaceDatastore(store, new Key('ttl')), { ttl: 100, frequency: 20 })
+      ttl = new TTLDatastore(new MemoryDatastore(), undefined, { ttl: 100, frequency: 20 })
     })
     it('should have default options', () => {
       expect(ttl).to.have.ownProperty('store')
@@ -110,6 +107,26 @@ describe('Datastore TTL', () => {
         expect(await ttl.has(key)).to.equal(true)
         await batch.commit()
         expect(await ttl.has(key)).to.equal(false)
+      })
+      it('should correctly expire batched items', async () => {
+        const batch = ttl.batch(100)
+        batch.put(key.child(new Key('1')), value)
+        batch.put(key.child(new Key('2')), value)
+        batch.put(key.child(new Key('3')), value)
+        await batch.commit()
+        let list = []
+        for await (const { key } of ttl.query({})) {
+          list.push(key)
+        }
+        expect(list).to.have.length(3)
+        ttl.ttl(key.child(new Key('3')), 300)
+        await sleep(200)
+        list = []
+        const it = ttl.query({ prefix: key.toString() })
+        for await (const kv of it) {
+          list.push(kv.key)
+        }
+        expect(list).to.have.length(1)
       })
     })
   })

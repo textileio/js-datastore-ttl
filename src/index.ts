@@ -3,11 +3,12 @@ import { RWLock } from 'async-rwlock'
 import { Datastore, Key, Batch, Query } from 'interface-datastore'
 import { NamespaceDatastore } from 'datastore-core'
 import { pack, unpack } from 'lexicographic-integer'
+import { Duration } from './duration'
 
 const ttlPrefix = new Key('ttl')
 const expPrefix = new Key('exp')
 
-export { Duration } from './duration'
+export { Duration }
 
 export interface TTLDatastoreOptions {
   /**
@@ -34,7 +35,7 @@ export class TTLBatch<Value = Buffer> implements Batch<Value> {
     private ttlOn: TTLOnFunction,
     private ttlOff: TTLOffFunction,
   ) {}
-  put(key: Key, value: Value, ttl?: number) {
+  put(key: Key, value: Value) {
     this.on.push(key)
     return this.batch.put(key, value)
   }
@@ -61,6 +62,7 @@ export class TTLBatch<Value = Buffer> implements Batch<Value> {
 export class TTLDatastore<Value = Buffer> implements Datastore<Value> {
   private lock: RWLock
   private interval: number | NodeJS.Timeout = 0
+  readonly options: TTLDatastoreOptions
   /**
    * TTLDatastore creates a new datastore that supports TTL expirations.
    *
@@ -73,8 +75,12 @@ export class TTLDatastore<Value = Buffer> implements Datastore<Value> {
   constructor(
     public store: Datastore<Value>,
     private meta: Datastore<Buffer> = new NamespaceDatastore(store, ttlPrefix),
-    readonly options: TTLDatastoreOptions = { ttl: 0, frequency: 10000 },
+    options?: TTLDatastoreOptions,
   ) {
+    this.options = {
+      frequency: options?.frequency || Duration.Second * 10,
+      ttl: options?.ttl || 0,
+    }
     this.lock = new RWLock()
     this.startTTL()
   }
@@ -87,10 +93,11 @@ export class TTLDatastore<Value = Buffer> implements Datastore<Value> {
     try {
       const exp: string = pack(Date.now(), 'hex')
       // @note: ttlPrefix is required 'hack' because NamespaceDatastore doesn't take this into account
+      // @fixme: Assuming ttlPrefix is not a good idea, we should extract the prefix from the meta store
       const lte = ttlPrefix.child(expPrefix.child(new Key(exp)))
       const query: Query<Buffer> = {
         prefix: expPrefix.toString(),
-        filters: [item => item.key.toString() <= lte.toString()],
+        filters: [item => item.key.less(lte)],
       }
       const meta = this.meta.batch()
       const store = this.store.batch()
@@ -105,6 +112,7 @@ export class TTLDatastore<Value = Buffer> implements Datastore<Value> {
     } finally {
       this.lock.unlock()
     }
+    return
   }
 
   /**
