@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>@textile/datastore-ttl - v0.0.2</title>
+	<title>@textile/datastore-ttl - v0.0.3</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="index.html" class="title">@textile/datastore-ttl - v0.0.2</a>
+					<a href="index.html" class="title">@textile/datastore-ttl - v0.0.3</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -54,7 +54,7 @@
 					<a href="globals.html">Globals</a>
 				</li>
 			</ul>
-			<h1> @textile/datastore-ttl - v0.0.2</h1>
+			<h1> @textile/datastore-ttl - v0.0.3</h1>
 		</div>
 	</div>
 </header>
@@ -112,17 +112,24 @@
 				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
 					<h2>Usage</h2>
 				</a>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { MemoryDatastore, Key } <span class="hljs-keyword">from</span> <span class="hljs-string">'interface-datastore'</span>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Buffer } <span class="hljs-keyword">from</span> <span class="hljs-string">'buffer'</span>
+<span class="hljs-keyword">import</span> { MemoryDatastore, Key } <span class="hljs-keyword">from</span> <span class="hljs-string">'interface-datastore'</span>
+<span class="hljs-keyword">import</span> { TTLDatastore } <span class="hljs-keyword">from</span> <span class="hljs-string">'@textile/datastore-ttl'</span>
 
 <span class="hljs-comment">// Use any compliant Datastore</span>
 <span class="hljs-keyword">const</span> child = <span class="hljs-keyword">new</span> MemoryDatastore()
 <span class="hljs-keyword">const</span> key = <span class="hljs-keyword">new</span> Key(<span class="hljs-string">'foo'</span>)
 <span class="hljs-keyword">const</span> store = <span class="hljs-keyword">new</span> TTLDatastore(child)
 <span class="hljs-keyword">await</span> ttl.put(key, Buffer.from(<span class="hljs-string">'bar'</span>), <span class="hljs-number">1000</span>)
-<span class="hljs-comment">// Wait 900 milliseconds...</span>
-<span class="hljs-keyword">await</span> ttl.ttl(key, <span class="hljs-number">100</span>) <span class="hljs-comment">// Keep alive for another 100 milliseconds</span>
+<span class="hljs-comment">// Wait 900 ms...</span>
+<span class="hljs-keyword">await</span> sleep(<span class="hljs-number">900</span>)
+<span class="hljs-comment">// Keep alive for another 100 ms from now</span>
+<span class="hljs-keyword">await</span> ttl.ttl(key, <span class="hljs-number">100</span>)
 <span class="hljs-keyword">await</span> ttl.has(key) <span class="hljs-comment">// true</span>
-<span class="hljs-comment">// Wait 110 milliseconds</span>
+<span class="hljs-keyword">await</span> ttl.expiration(key) <span class="hljs-comment">// &lt;unix-timestamp&gt;</span>
+<span class="hljs-keyword">await</span> ttl.get(key) <span class="hljs-comment">// &lt;Buffer&gt;</span>
+<span class="hljs-comment">// Wait 110 ms</span>
+<span class="hljs-keyword">await</span> sleep(<span class="hljs-number">110</span>)
 <span class="hljs-keyword">await</span> ttl.has(key) <span class="hljs-comment">// false</span></code></pre>
 				<p>There are also several useful examples included in the <a href="./blob/master/src/index.spec.ts">tests</a>.</p>
 				<a href="#api" id="api" style="color: inherit; text-decoration: none;">
