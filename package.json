@@ -1,6 +1,6 @@
 {
   "name": "@textile/datastore-ttl",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "An implementation of the Datastore interface that supports a time-to-live for key-value pairs.",
   "main": "dist/index",
   "types": "dist/index",
