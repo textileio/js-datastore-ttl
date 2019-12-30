@@ -69,9 +69,9 @@ jobs:
                   npm install -g --silent gh-pages@2.1.1
                   git config --global user.email "circleci@textile.io"
                   git config --global user.name "circleci"
-            - add_ssh_keys:
-                fingerprints:
-                    - 66:76:37:0b:48:d8:a0:2e:69:d4:5e:ba:64:64:81:a0
+            # - add_ssh_keys:
+                # fingerprints:
+                    # - 66:76:37:0b:48:d8:a0:2e:69:d4:5e:ba:64:64:81:a0
             # - run:
                 # name: Deploy Docs
                 # command: gh-pages --message "[skip ci] chore(docs) update" --dist docs
