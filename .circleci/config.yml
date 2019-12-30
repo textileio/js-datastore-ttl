@@ -5,7 +5,7 @@ defaults: &defaults
     docker:
         - image: circleci/node:10.13.0-browsers
 jobs:
-    lint-test:
+    test:
         <<: *defaults
         steps:
             - checkout
@@ -60,21 +60,6 @@ jobs:
                 root: ~/js-datastore-ttl
                 paths:
                   - docs
-    docs-pub:
-        <<: *defaults
-        steps:
-            - run:
-                name: Prepare Docs
-                command: |
-                  npm install --silent gh-pages
-                  git config --global user.email "circleci@textile.io"
-                  git config --global user.name "circleci"
-            - add_ssh_keys:
-                fingerprints:
-                    - 66:76:37:0b:48:d8:a0:2e:69:d4:5e:ba:64:64:81:a0
-            - run:
-                name: Deploy Docs
-                command: node ./node_modules/gh-pages/bin/gh-pages --message "[skip ci] chore(docs) update" --dist docs
     deploy:
         <<: *defaults
         steps:
@@ -94,24 +79,30 @@ jobs:
             - run:
                 name: Publish Package
                 command: npm publish --access=public --unsafe-perm
+            - run:
+                name: Prepare Docs
+                command: |
+                  npm install --silent gh-pages
+                  git config --global user.email "circleci@textile.io"
+                  git config --global user.name "circleci"
+            - add_ssh_keys:
+                fingerprints:
+                    - 66:76:37:0b:48:d8:a0:2e:69:d4:5e:ba:64:64:81:a0
+            - run:
+                name: Deploy Docs
+                command: node ./node_modules/gh-pages/bin/gh-pages --message "[skip ci] chore(docs) update" --dist docs
 
 workflows:
     version: 2
     js-datastore-ttl:
         jobs:
-            - lint-test:
+            - test:
                 filters:
                     tags:
                         only: /.*/
             - docs:
                 requires:
                     - lint-test
-                filters:
-                    tags:
-                        only: /^v.*/
-            - docs-pub:
-                requires:
-                  - lint-test
                 filters:
                     tags:
                         only: /^v.*/
