@@ -55,6 +55,9 @@ import { Buffer } from 'buffer'
 import { MemoryDatastore, Key } from 'interface-datastore'
 import { TTLDatastore } from '@textile/datastore-ttl'
 
+// Simple promise-based sleep function
+const sleep = (ms: number) => new Promise(r => setTimeout(r, ms))
+
 // Use any compliant Datastore
 const child = new MemoryDatastore()
 const key = new Key('foo')
