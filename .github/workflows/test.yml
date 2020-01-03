@@ -39,7 +39,7 @@ jobs:
       run: mkdir coverage && mkdir tests
     - name: Test Node
       run: MOCHA_FILE=tests/results.xml npm run test:node -- --reporter=mocha-junit-reporter
-    -name: Test Browser
+    - name: Test Browser
       run: npm run test:browser
     - name: Results
       uses: actions/upload-artifact@v1
