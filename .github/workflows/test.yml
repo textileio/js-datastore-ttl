@@ -1,4 +1,4 @@
-name: Lint & Test
+name: Test
 on:
   push:
     branches:
@@ -6,20 +6,36 @@ on:
   pull_request:
     branches:
       - master
+
 jobs:
 
   lint:
     name: Lint
     runs-on: ubuntu-latest
+
     steps:
+
     - name: Checkout
       uses: actions/checkout@v1
+
+    - name: Cache
+      uses: actions/cache@v1
+      with:
+        path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
+
     - name: Setup
       uses: actions/setup-node@v1
       with:
         node-version: 12
+
     - name: Install
       run: npm install
+
     - name: Lint
       run: npm run lint
 
@@ -27,26 +43,45 @@ jobs:
     name: Test
     needs: lint
     runs-on: ubuntu-latest
+
     steps:
+
     - name: Checkout
       uses: actions/checkout@v1
+
+    - name: Cache
+      uses: actions/cache@v1
+      with:
+        path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
+
     - name: Setup
       uses: actions/setup-node@v1
       with:
         node-version: 12
+
     - name: Install
       run: npm install
+
     - name: Test Setup
       run: mkdir coverage && mkdir tests
+
     - name: Test Node
       run: MOCHA_FILE=tests/results.xml npm run test:node -- --reporter=mocha-junit-reporter
+
     - name: Test Browser
       run: npm run test:browser
+
     - name: Results
       uses: actions/upload-artifact@v1
       with:
         name: Results
         path: tests
+
     - name: Coverage
       uses: actions/upload-artifact@v1
       with:
