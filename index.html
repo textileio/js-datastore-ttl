@@ -1,0 +1,252 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>@textile/datastore-ttl - v0.0.5</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">@textile/datastore-ttl - v0.0.5</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1> @textile/datastore-ttl - v0.0.5</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<a href="#time-to-live-datastore-emdatastore-ttlem" id="time-to-live-datastore-emdatastore-ttlem" style="color: inherit; text-decoration: none;">
+					<h1>Time to Live Datastore <em>(datastore-ttl)</em></h1>
+				</a>
+				<p><a href="https://textile.io"><img src="https://img.shields.io/badge/made%20by-Textile-informational.svg?style=flat-square" alt="Made by Textile"></a>
+					<a href="https://slack.textile.io"><img src="https://img.shields.io/badge/slack-slack.textile.io-informational.svg?style=flat-square" alt="Chat on Slack"></a>
+					<a href="./LICENSE"><img src="https://img.shields.io/github/license/textileio/js-datastore-ttl.svg?style=flat-square" alt="GitHub license"></a>
+					<a href="./package.json"><img src="https://img.shields.io/github/package-json/v/textileio/js-datastore-ttl.svg?style=popout-square" alt="GitHub package.json version"></a>
+					<a href="https://www.npmjs.com/package/@textile/datastore-ttl"><img src="https://img.shields.io/npm/v/@textile/datastore-ttl.svg?style=popout-square" alt="npm (scoped)"></a>
+					<a href="https://github.com/textileio/js-datastore-ttl/releases/latest"><img src="https://img.shields.io/github/release/textileio/js-datastore-ttl.svg?style=flat-square" alt="Release"></a>
+					<a href="https://textileio.github.io/js-datastore-ttl"><img src="https://img.shields.io/badge/docs-master-success.svg?style=popout-square" alt="Docs"></a>
+					<a href="https://github.com/textileio/js-datastore-ttl/actions"><img src="https://img.shields.io/github/workflow/status/textileio/js-datastore-ttl/Lint%20&%20Test?style=flat-square" alt="Workflow"></a>
+				<a href="https://github.com/RichardLitt/standard-readme"><img src="https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square" alt="standard-readme compliant"></a></p>
+				<blockquote>
+					<p>An implementation of the <a href="https://github.com/ipfs/interface-datastore">Datastore interface</a> that
+					supports a time-to-live (TTL) for key-value pairs.</p>
+				</blockquote>
+				<p>After the TTL expires on a given key, the entry will be automatically cleared from the datastore
+					unless it is refreshed in the mean time. In this way you can build utilities like session managers
+					where a given session is refreshed with each interaction but expires after a set period of time
+				since the last interaction. This library borrows inspiration and ideas from <a href="https://github.com/Level/level-ttl">level-ttl</a>.</p>
+				<a href="#table-of-contents" id="table-of-contents" style="color: inherit; text-decoration: none;">
+					<h2>Table of Contents</h2>
+				</a>
+				<details><summary>Click to expand</summary>
+					<ul>
+						<li><a href="#background">Background</a></li>
+						<li><a href="#install">Install</a></li>
+						<li><a href="#usage">Usage</a></li>
+						<li><a href="#api">API</a></li>
+						<li><a href="#maintainers">Maintainers</a></li>
+						<li><a href="#contributing">Contributing</a></li>
+						<li><a href="#license">License</a></li>
+					</ul>
+				</details>
+				<a href="#background" id="background" style="color: inherit; text-decoration: none;">
+					<h2>Background</h2>
+				</a>
+				<p><code>TTLDatastore</code> uses an internal scan every 10 seconds by default, this limits the available resolution of your TTL values, possibly delaying a delete for up to 10 seconds. The resolution can be tuned by passing the <code>frequency</code> option to the constructor.</p>
+				<p>Of course, a scan takes some resources, particularly on a data store that makes heavy use of TTLs. If you don&#39;t require high accuracy for actual deletions then you can increase the <code>frequency</code>. Note though that a scan only involves invoking a query that returns only the entries due to expire, so it doesn&#39;t have to manually check through all entries with a TTL. Depending on the backing Datastore, this could be reasonably efficient, or extremely slow. So keep that in mind.</p>
+				<a href="#default-ttl" id="default-ttl" style="color: inherit; text-decoration: none;">
+					<h3>Default TTL</h3>
+				</a>
+				<p>You can set a default TTL value for all your keys by specifying the <code>ttl</code> option to the constructor. This can be overridden by explicitly setting the TTL value on <code>put</code> or by calling the top-level <code>ttl</code> method.</p>
+				<a href="#install" id="install" style="color: inherit; text-decoration: none;">
+					<h2>Install</h2>
+				</a>
+				<pre><code><span class="hljs-built_in">npm</span> i @textileio/datastore-ttl</code></pre>
+				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+					<h2>Usage</h2>
+				</a>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { Buffer } <span class="hljs-keyword">from</span> <span class="hljs-string">'buffer'</span>
+<span class="hljs-keyword">import</span> { MemoryDatastore, Key } <span class="hljs-keyword">from</span> <span class="hljs-string">'interface-datastore'</span>
+<span class="hljs-keyword">import</span> { TTLDatastore } <span class="hljs-keyword">from</span> <span class="hljs-string">'@textile/datastore-ttl'</span>
+
+<span class="hljs-comment">// Simple promise-based sleep function</span>
+<span class="hljs-keyword">const</span> sleep = <span class="hljs-function">(<span class="hljs-params">ms: <span class="hljs-built_in">number</span></span>) =&gt;</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function"><span class="hljs-params">r</span> =&gt;</span> setTimeout(r, ms))
+
+<span class="hljs-comment">// Use any compliant Datastore</span>
+<span class="hljs-keyword">const</span> child = <span class="hljs-keyword">new</span> MemoryDatastore()
+<span class="hljs-keyword">const</span> key = <span class="hljs-keyword">new</span> Key(<span class="hljs-string">'foo'</span>)
+<span class="hljs-keyword">const</span> store = <span class="hljs-keyword">new</span> TTLDatastore(child)
+<span class="hljs-keyword">await</span> ttl.put(key, Buffer.from(<span class="hljs-string">'bar'</span>), <span class="hljs-number">1000</span>)
+<span class="hljs-comment">// Wait 900 ms...</span>
+<span class="hljs-keyword">await</span> sleep(<span class="hljs-number">900</span>)
+<span class="hljs-comment">// Keep alive for another 100 ms from now</span>
+<span class="hljs-keyword">await</span> ttl.ttl(key, <span class="hljs-number">100</span>)
+<span class="hljs-keyword">await</span> ttl.has(key) <span class="hljs-comment">// true</span>
+<span class="hljs-keyword">await</span> ttl.expiration(key) <span class="hljs-comment">// &lt;unix-timestamp&gt;</span>
+<span class="hljs-keyword">await</span> ttl.get(key) <span class="hljs-comment">// &lt;Buffer&gt;</span>
+<span class="hljs-comment">// Wait 110 ms</span>
+<span class="hljs-keyword">await</span> sleep(<span class="hljs-number">110</span>)
+<span class="hljs-keyword">await</span> ttl.has(key) <span class="hljs-comment">// false</span></code></pre>
+				<p>There are also several useful examples included in the <a href="./blob/master/src/index.spec.ts">tests</a>.</p>
+				<a href="#api" id="api" style="color: inherit; text-decoration: none;">
+					<h2>API</h2>
+				</a>
+				<p>See <a href="https://textileio.github.io/js-datastore-ttl">https://textileio.github.io/js-datastore-ttl</a></p>
+				<a href="#maintainers" id="maintainers" style="color: inherit; text-decoration: none;">
+					<h2>Maintainers</h2>
+				</a>
+				<p><a href="https://github.com/carsonfarmer">Carson Farmer</a></p>
+				<a href="#contributing" id="contributing" style="color: inherit; text-decoration: none;">
+					<h2>Contributing</h2>
+				</a>
+				<p>See <a href="CONTRIBUTING.md">the contributing file</a>. PRs accepted!</p>
+				<p>Small note: If editing the README, please conform to the <a href="https://github.com/RichardLitt/standard-readme">standard-readme</a> specification.</p>
+				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
+					<h2>License</h2>
+				</a>
+				<p><a href="LICENSE">MIT</a> (c) 2019 Textile.io</p>
+				<a href="#thanks" id="thanks" style="color: inherit; text-decoration: none;">
+					<h2>Thanks</h2>
+				</a>
+				<p>Big thanks to the find folks behind <a href="https://github.com/Level/level-ttl/blob/master/CONTRIBUTORS.md"><code>Level/level-ttl</code></a>.</p>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-enum">
+						<a href="enums/duration.html" class="tsd-kind-icon">Duration</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/ttlbatch.html" class="tsd-kind-icon">TTLBatch</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/ttldatastore.html" class="tsd-kind-icon">TTLDatastore</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/ttldatastoreoptions.html" class="tsd-kind-icon">TTLDatastore<wbr>Options</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer>
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
+</body>
+</html>
