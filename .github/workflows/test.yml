@@ -35,11 +35,12 @@ jobs:
         node-version: 12
     - name: Install
       run: npm install
-    - name: Test
-      run: |
-        cd ~ && mkdir -p coverage && mkdir -p test-results/mocha
-        MOCHA_FILE=test-results/results.xml npm run test:node -- --reporter=mocha-junit-reporter
-        npm run test:browser
+    - name: Test Setup
+      run: mkdir coverage && mkdir tests
+    - name: Test Node
+      run: MOCHA_FILE=tests/results.xml npm run test:node -- --reporter=mocha-junit-reporter
+    -name: Test Browser
+      run: npm run test:browser
     - name: Results
       uses: actions/upload-artifact@v1
       with:
