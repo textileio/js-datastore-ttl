@@ -118,10 +118,10 @@ export class TTLDatastore<Value = Buffer> implements Datastore<Value> {
   /**
    * addTTL sets the TTL metadata for given (array of) keys.
    * @param keys The keys
-   * @param ttl The time-to-live, in milliseconds. Skips update if not specified.
+   * @param ttl The time-to-live, in milliseconds. Skips update if not specified or infinitely large.
    */
   protected async addTTL(keys: Key[], ttl?: number) {
-    if (ttl === undefined) return
+    if (ttl === undefined || ttl == Infinity) return
     // @todo: Can we share a single 'batch' between addTTL and removeTTL?
     await this.lock.writeLock()
     try {
