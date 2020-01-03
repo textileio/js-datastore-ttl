@@ -1,4 +1,4 @@
-name: Deploy
+name: Deploy & Docs
 on:
   push:
     branches:
@@ -8,7 +8,7 @@ on:
 jobs:
 
   deploy:
-    name: Deploy
+    name: Deploy & Docs
     runs-on: ubuntu-latest
     steps:
     - name: Checkout

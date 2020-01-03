@@ -1,4 +1,4 @@
-name: Lint, Test, & Docs
+name: Lint & Test
 on:
   push:
     branches:
@@ -45,7 +45,7 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: Results
-        path: test-results
+        path: tests
     - name: Coverage
       uses: actions/upload-artifact@v1
       with:
