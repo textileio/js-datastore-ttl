@@ -102,7 +102,7 @@ workflows:
                         only: /.*/
             - docs:
                 requires:
-                    - lint-test
+                    - test
                 filters:
                     tags:
                         only: /^v.*/
