@@ -7,7 +7,7 @@
 [![npm (scoped)](https://img.shields.io/npm/v/@textile/datastore-ttl.svg?style=popout-square)](https://www.npmjs.com/package/@textile/datastore-ttl)
 [![Release](https://img.shields.io/github/release/textileio/js-datastore-ttl.svg?style=flat-square)](https://github.com/textileio/js-datastore-ttl/releases/latest)
 [![Docs](https://img.shields.io/badge/docs-master-success.svg?style=popout-square)](https://textileio.github.io/js-datastore-ttl)
-[![Workflow](https://img.shields.io/github/workflow/status/textileio/js-datastore-ttl/Lint & Test?style=flat-square)](https://github.com/textileio/js-datastore-ttl/actions)
+[![Workflow](https://img.shields.io/github/workflow/status/textileio/js-datastore-ttl/Lint%20&%20Test?style=flat-square)](https://github.com/textileio/js-datastore-ttl/actions)
 [![standard-readme compliant](https://img.shields.io/badge/standard--readme-OK-green.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 
 > An implementation of the [Datastore interface](https://github.com/ipfs/interface-datastore) that
