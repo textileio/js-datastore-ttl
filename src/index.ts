@@ -92,16 +92,12 @@ export class TTLDatastore<Value = Buffer> implements Datastore<Value> {
     await this.lock.readLock()
     try {
       const exp: string = pack(Date.now(), 'hex')
-      // @note: ttlPrefix is required 'hack' because NamespaceDatastore doesn't take this into account
-      // @fixme: Assuming ttlPrefix is not a good idea, we should extract the prefix from the meta store
-      const lte = ttlPrefix.child(expPrefix.child(new Key(exp)))
-      const query: Query<Buffer> = {
-        prefix: expPrefix.toString(),
-        filters: [item => item.key.less(lte)],
-      }
+      const lte = expPrefix.child(new Key(exp))
+      const query: Query<Buffer> = { prefix: expPrefix.toString() }
       const meta = this.meta.batch()
       const store = this.store.batch()
       for await (const { key, value } of this.meta.query(query)) {
+        if (!key.less(lte)) continue // @todo: There are more efficient ways to handle this
         const k = new Key(value) // the value _is_ the key
         meta.delete(key) // exp key that matches this query
         meta.delete(k) // key for tracking exp timestamp
