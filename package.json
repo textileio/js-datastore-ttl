@@ -11,7 +11,7 @@
     "prepublishOnly": "npm run build",
     "test": "npm run test:node && npm run test:browser",
     "test:node": "TS_NODE_FILES=true mocha -r ts-node/register -r source-map-support/register --recursive src/**/*.spec.ts",
-    "test:browser": "npx polendina --cleanup src/**.spec.ts --webpack-config webpack.test.js",
+    "test:browser": "npx polendina@1.0.0 --cleanup src/**.spec.ts --webpack-config webpack.test.js",
     "lint": "eslint --fix --ext .js,.ts src",
     "docs": "typedoc"
   },
