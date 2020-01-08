@@ -74,9 +74,3 @@ jobs:
 
     - name: Test Browser
       run: npm run test:browser
-
-    - name: Results
-      uses: actions/upload-artifact@v1
-      with:
-        name: Results
-        path: tests
