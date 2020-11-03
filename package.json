@@ -37,7 +37,7 @@
     "@types/datastore-core": "^0.7.0",
     "@types/interface-datastore": "^0.8.0",
     "@types/lexicographic-integer": "^1.1.0",
-    "@types/mocha": "^7.0.1",
+    "@types/mocha": "^8.0.3",
     "@types/node": "^13.1.2",
     "@typescript-eslint/eslint-plugin": "^2.9.0",
     "@typescript-eslint/parser": "^2.9.0",
