@@ -58,7 +58,7 @@
   "dependencies": {
     "async-rwlock": "^1.1.1",
     "datastore-core": "^0.7.0",
-    "interface-datastore": "^0.8.0",
+    "interface-datastore": "^4.0.0",
     "lexicographic-integer": "^1.1.0"
   }
 }
